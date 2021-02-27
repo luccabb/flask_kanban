@@ -1,0 +1,41 @@
+#todo { 
+    background-color: lightblue;
+}
+
+#doing { 
+    background-color: lightgreen;
+}
+
+#done { 
+    background-color: lightcoral;
+}
+
+h1, h2, form {
+    text-align: center;
+}
+
+.column {
+    float: left;
+    width: 33.33%;
+    height: 700px;
+}
+
+.column-task{
+    float: left;
+    width: 33.33%;
+    height: 30px;
+}
+
+.table {
+    margin:0 auto;
+    width: 90%;
+    height: 80%;
+    border:1px solid black;
+}
+
+.card {
+    margin:0 auto;
+    width: 90%;
+    height: 110px;
+    background-color: lightgrey
+}

@@ -33,7 +33,8 @@ class TestingConfig(Config):
     DEBUG = True
     TESTING = True
     DB_SERVER = 'localhost'
-    DATABASE_URI = 'sqlite:///:memory:'
+    SQLALCHEMY_DATABASE_URI=DATABASE_URI = 'sqlite:///:memory:'
+    SECRET_KEY='testing_key'
 
 config = {
     "prod": ProductionConfig,

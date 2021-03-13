@@ -10,9 +10,7 @@ from web import app, db
 
 @pytest.fixture
 def client():
-    print('adsfafd')
     db_fd, app.config['DATABASE'] = tempfile.mkstemp()
-    print('asdfasdf')
     app.config['FLASK_ENV'] = 'test'
     client = app.test_client()
 
@@ -22,7 +20,7 @@ def client():
     os.unlink(app.config['DATABASE'])
 
 
-def test_empty_db(client):
+def test_homepage(client):
     """Start with a blank database."""
 
     rv = client.get('/')

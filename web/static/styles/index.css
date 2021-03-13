@@ -10,8 +10,17 @@
     background-color: lightcoral;
 }
 
-h1, h2, form {
+h1, h2, form, .info {
     text-align: center;
+}
+
+.info h3, .info a {
+    display: inline;
+    vertical-align: top;
+    font-size: 16px;
+    line-height: 28px;
+    color: #007bff;
+    margin-inline: 50px;
 }
 
 .column {

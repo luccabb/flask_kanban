@@ -34,7 +34,6 @@ def create():
     # creating user on DB sdff@sa.com
     db.session.add(Task(title=title, description=description, status=status, user_id=current_user.id))
     db.session.commit()
-    print(status)
     return redirect(url_for('routes.index'))
 
 @routes.route('/send_todo', methods=["GET", "POST"])

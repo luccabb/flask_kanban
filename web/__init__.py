@@ -1,5 +1,5 @@
 from flask import Flask
-from .models import db
+from .models import db, mail
 from .routes import routes
 from .auth import login_manager, auth
 import os
@@ -17,10 +17,20 @@ app.register_blueprint(auth)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config.update(dict(
+    DEBUG = False,
+    MAIL_SERVER = 'smtp.gmail.com',
+    MAIL_PORT = 587,
+    MAIL_USE_TLS = True,
+    MAIL_USE_SSL = False,
+    MAIL_USERNAME = "luccabertoncini2017@gmail.com",
+    MAIL_PASSWORD = "Accepted2017!",
+))
 
 login_manager.init_app(app)
 db.init_app(app)
 csrf.init_app(app)
+mail.init_app(app)
 migrate = Migrate(app, db)
 
 with app.app_context():

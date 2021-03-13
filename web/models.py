@@ -1,7 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from flask_mail import Mail
 
 db = SQLAlchemy()
+mail = Mail()
 
 # ORM mapping
 class Task(db.Model):
@@ -16,4 +18,5 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(200), unique=True)
     email = db.Column(db.String(200))
     password = db.Column(db.String(200))
+    reset_token = db.Column(db.String(200))
     task = db.relationship("Task")

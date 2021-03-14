@@ -26,25 +26,30 @@ h1, h2, form, .info {
 .column {
     float: left;
     width: 33.33%;
-    height: 700px;
+    min-height: 250px;
 }
 
 .column-task{
     float: left;
     width: 33.33%;
-    height: 30px;
 }
 
 .table {
     margin:0 auto;
     width: 90%;
-    height: 80%;
     border:1px solid black;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    min-height: 400px;
+}
+
+.row{
+    overflow: auto;
 }
 
 .card {
     margin:0 auto;
     width: 90%;
-    height: 110px;
-    background-color: lightgrey
+    padding-bottom: 10px;
+    background-color: lightgrey;
 }

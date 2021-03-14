@@ -1,60 +1,32 @@
-# Welcome to CS162 Final Project
+# CS162 Kanban Board
 
-## Run Virtual Environment
+The website is deployed on heroku and can be accessed on the following url: https://kanban-app-cs162.herokuapp.com/
 
-Virtual environment is a key component in ensuring that the application is configured in the right environment
+## Project Structure
 
-##### Requirements
-* Python 3
-* Pip 3
+`/web` contains application code.
+    - `/static` css files.
+    - `/templates` html files.
+    - `__init__.py` project initializer file.
+    - `auth.py` routes related to authorization/authentication.
+    - `config.py` different configurations based on running environment (test/dev/prod).
+    - `models.py` ORM mapping (from DB models to python classes) using SQLAlchemy.
+    - `routes.py` application routes.
 
-```bash
-$ brew install python3
-```
+`/test` contains 25 unit tests in total. Tests for: registration, login, reset password, and kanban operations (todo, doing, done).
 
-Pip3 is installed with Python3
+`/migrations` directory used to control DB migrations, using Flask-migrate.
 
-##### Installation
-To install virtualenv via pip run:
-```bash
-$ pip3 install virtualenv
-```
+`.env/example` contains all variables needed on your .env so the project runs on production or locally.
 
-##### Usage
-Creation of virtualenv:
-
-    $ virtualenv -p python3 venv
-
-If the above code does not work, you could also do
-
-    $ python3 -m venv venv
-
-To activate the virtualenv:
-
-    $ source venv/bin/activate
-
-Or, if you are **using Windows** - [reference source:](https://stackoverflow.com/questions/8921188/issue-with-virtualenv-cannot-activate)
-
-    $ venv\Scripts\activate
-
-To deactivate the virtualenv (after you finished working):
-
-    $ deactivate
-
-Install dependencies in virtual environment:
-
-    $ pip3 install -r requirements.txt
-
-## Environment Variables
-
-All environment variables are stored within the `.env` file and loaded with dotenv package.
-
-**Never** commit your local settings to the Github repository!
+`Procfile` used for heroku deployment.
 
 ## Run Application
 
-Start the server by running:
+Start the server on a mac locally by running:
 
+    $ source env/bin/activate
+    $ pip install -r requirements-unit.txt
     $ export FLASK_ENV=dev
     $ export FLASK_APP=web
     $ python3 -m flask run
@@ -67,7 +39,3 @@ To run the unit tests on mac use the following commands:
     $ export FLASK_ENV=test
     $ export SECRET_KEY='test-key'
     $ pytest unit_test
-
-## Deployment
-
-The website is deployed on heroku and can be accessed on the following url: https://kanban-app-cs162.herokuapp.com/

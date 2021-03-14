@@ -9,6 +9,9 @@ import jwt, os, json
 from datetime import datetime, timedelta
 from flask_mail import Message
 
+# auth related routes
+
+# forms and their validations
 class LoginForm(FlaskForm):
     email = StringField('Email')
     password = PasswordField('Password')
@@ -32,10 +35,10 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different username.')
 
-    # def validate_email(self, email):
-    #     user = User.query.filter_by(email=email.data).first()
-    #     if user is not None:
-    #         raise ValidationError('Please use a different email address.')
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different email address.')
 
 login_manager = LoginManager()
 # new application blueprint for routes
@@ -47,6 +50,8 @@ def load_user(id):
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
+    # sign up page when receiving get request
+    # creating user on DB when receiving post request
     if request.method == 'GET':
         form = RegistrationForm(request.form)
         if current_user and current_user.is_authenticated:
@@ -54,6 +59,7 @@ def signup():
         return render_template('signup.html', form=form)
     
     elif request.method == 'POST':
+        # form validation
         form = RegistrationForm(request.form)
         if not form.validate_on_submit():
             print("Signup form errors:", form.errors.items())
@@ -66,6 +72,7 @@ def signup():
             return redirect(url_for('auth.login'))
 
 def check_password(user_password, password):
+    # check if passsord provided by user is the correct one
     return pbkdf2_sha256.verify(password, user_password)
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -81,17 +88,16 @@ def login():
             return render_template('login.html', form=form)
         
         # Login and validate the user.
-        # user should be an instance of your `User` class
         user = User.query.filter_by(email=form.email.data).first()
         if user is None or not check_password(user.password, form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('auth.login'))
         login_user(user)
-
         return redirect(url_for('routes.index'))
 
 @auth.route('/reset', methods=['GET', 'POST'])
 def reset():
+    # user requested password reset route
     form = ResetForm(request.form)
     if request.method == 'GET':
         if current_user and current_user.is_authenticated:
@@ -123,6 +129,7 @@ def reset():
 
 @auth.route('/reset/token/<encoded_jwt>', methods=['GET', 'POST'])
 def reset_token(encoded_jwt, methods=['GET', 'POST']):
+    # user sent new password after requesting password reset
     form = ResetPasswordForm(request.form)
     try:
         # get token data
@@ -134,7 +141,7 @@ def reset_token(encoded_jwt, methods=['GET', 'POST']):
 
         # getting user DB data to check if the token is the same
         user = User.query.filter_by(email=user_email).first()
-        # if it's not the same from the DB, the time expired, or we didn't found a user we have an invalid token
+        # if it's not the same from the DB, the time expired, or we didn't found a user: we have an invalid token
         if user is None or user.reset_token != encoded_jwt or not user_datetime + timedelta(hours=1) > datetime.now():
             flash('Invalid token')
             return redirect(url_for('routes.index'))
@@ -146,6 +153,7 @@ def reset_token(encoded_jwt, methods=['GET', 'POST']):
         return redirect(url_for('routes.index'))
     
     if request.method == 'GET':
+        # you can only access this page if you're logged out
         if current_user and current_user.is_authenticated:
             return redirect(url_for('routes.index'))
         return render_template('new_password.html', form=form)
@@ -154,15 +162,15 @@ def reset_token(encoded_jwt, methods=['GET', 'POST']):
             print("Form errors:", form.errors.items())
             return render_template('new_password.html', form=form)
         
+        # updating password and cleaning DB token
         user.password = pbkdf2_sha256.hash(form.new_password.data)
         user.reset_token = ""
         db.session.commit()
         flash('Password updated!')
         return redirect(url_for('auth.login'))
 
-        
-
 @auth.route('/logout')
 def logout():
+    # logging user out
     logout_user()
     return redirect(url_for('routes.index'))

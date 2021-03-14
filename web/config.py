@@ -33,6 +33,7 @@ class TestingConfig(Config):
     DEBUG = True
     TESTING = True
     DB_SERVER = 'localhost'
+    WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI=DATABASE_URI = 'sqlite:///:memory:'
     SECRET_KEY='testing_key'
 

@@ -5,15 +5,22 @@ The website is deployed on heroku and can be accessed on the following url: http
 ## Project Structure
 
 `/web` contains application code.
-    - `/static` css files.
-    - `/templates` html files.
-    - `__init__.py` project initializer file.
-    - `auth.py` routes related to authorization/authentication.
-    - `config.py` different configurations based on running environment (test/dev/prod).
-    - `models.py` ORM mapping (from DB models to python classes) using SQLAlchemy.
-    - `routes.py` application routes.
 
-`/test` contains 25 unit tests in total. Tests for: registration, login, reset password, and kanban operations (todo, doing, done).
+`/web/static` css files.
+
+`/web/templates` html files.
+
+`/web/__init__.py` project initializer file.
+
+`/web/auth.py` routes related to authorization/authentication.
+
+`/web/config.py` different configurations based on running environment (test/dev/prod).
+
+`/web/models.py` ORM mapping (from DB models to python classes) using SQLAlchemy.
+
+`/web/routes.py` application routes.
+
+`/unit_test` contains 25 unit tests in total. Tests for: registration, login, reset password, and kanban operations (todo, doing, done).
 
 `/migrations` directory used to control DB migrations, using Flask-migrate.
 
